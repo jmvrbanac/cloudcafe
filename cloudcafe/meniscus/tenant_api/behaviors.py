@@ -84,6 +84,10 @@ class ProducerBehaviors(TenantBehaviors):
         req = self.producer_client.create_producer(
             name=name, pattern=pattern, durable=durable, encrypted=encrypted)
 
+        assert req.status_code == 201, '{0}: {1}'.format(
+            'Failed to create producer',
+            req.text)
+
         producer_id = RequestUtilities.get_id(req)
         self.producers_created.append(producer_id)
 
