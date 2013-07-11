@@ -117,7 +117,7 @@ class ProfileBehaviors(ProducerBehaviors):
     def create_profile_from_cfg(self, name=None, producer_ids=None):
         return self.create_profile(
             name=name or self.tenant_config.profile_name,
-            producer_ids=producer_ids)
+            producer_ids=producer_ids or [])
 
     def create_profile(self, name=None, producer_ids=None):
         profile_req = self.profile_client.create_profile(
@@ -184,4 +184,3 @@ class HostBehaviors(ProfileBehaviors):
             'request': host_req,
             'host_id': host_id
         }
-

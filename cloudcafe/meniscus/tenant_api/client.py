@@ -22,7 +22,7 @@ from cloudcafe.meniscus.tenant_api.models.producer import \
 from cloudcafe.meniscus.tenant_api.models.profile import \
     CreateProfile, UpdateProfile, AllProfiles, Profile
 from cloudcafe.meniscus.tenant_api.models.host import \
-    CreateHost, UpdateHost, AllHosts, Host
+    CreateHost, UpdateHost, HostList, Host
 
 
 class MeniscusClient(AutoMarshallingRestClient):
@@ -309,7 +309,7 @@ class HostClient(MeniscusClient):
             tenant_id=self.tenant_id)
 
         response = self.request('GET', remote_url,
-                                response_entity_type=AllHosts)
+                                response_entity_type=HostList)
         return response
 
     def update_host(self, host_id, hostname=None, ip_v4=None, ip_v6=None,

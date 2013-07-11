@@ -29,7 +29,7 @@ class CreateTenant(AutoMarshallingModel):
         return json_to_str(self._obj_to_dict())
 
     def _obj_to_dict(self):
-        return {'tenant_id': self.tenant_id}
+        return {'tenant': {'tenant_id': self.tenant_id}}
 
 
 class Tenant(AutoMarshallingModel):
