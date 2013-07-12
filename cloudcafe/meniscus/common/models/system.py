@@ -15,7 +15,8 @@ limitations under the License.
 """
 
 from json import dumps as json_to_str
-from cafe.engine.models.base import AutoMarshallingModel
+from cafe.engine.models.base import (AutoMarshallingModel,
+                                     AutoMarshallingListModel)
 
 
 class SystemInfo(AutoMarshallingModel):
@@ -71,11 +72,9 @@ class LoadAverage(AutoMarshallingModel):
 
     def _obj_to_dict(self):
         return {
-            'load_average': {
-                '1': self.one_average,
-                '5': self.five_average,
-                '15': self.fifteen_average
-            }
+            '1': self.one_average,
+            '5': self.five_average,
+            '15': self.fifteen_average
         }
 
     def _obj_to_json(self):
@@ -91,20 +90,10 @@ class LoadAverage(AutoMarshallingModel):
         return LoadAverage(**kwargs)
 
 
-class DiskUsage(AutoMarshallingModel):
-    def __init__(self):
-        super(DiskUsage, self).__init__()
-        self.partitions = []
-
-    def add_disk(self, partition):
-        if partition is not None:
-            self.partitions.append(partition)
+class DiskUsage(AutoMarshallingListModel):
 
     def _obj_to_dict(self):
-        body = {}
-        for partition in self.partitions:
-            body.update(partition._obj_to_dict())
-        return body
+        return [disk._obj_to_dict() for disk in self]
 
     def _obj_to_json(self):
         return json_to_str(self._obj_to_dict())
@@ -116,7 +105,7 @@ class DiskUsage(AutoMarshallingModel):
             part = Partition(name=disk,
                              used=json_dict[disk]['used'],
                              total=json_dict[disk]['total'])
-            usage.add_disk(part)
+            usage.append(part)
         return usage
 
 
@@ -130,10 +119,11 @@ class Partition(AutoMarshallingModel):
         self.used = used
 
     def _obj_to_dict(self):
-        body = {self.name: {
+        body = {
+            'device': self.name,
             'total': self.total,
             'used': self.used
-        }}
+        }
         return body
 
     def _obj_to_json(self):

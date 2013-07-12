@@ -52,7 +52,7 @@ class PairingClient(AutoMarshallingRestClient):
                                  cpu_cores=cpu_cores,
                                  load_average=load_average)
         request_obj = WorkerRegistration(
-            hostname=hostname, callback=callback, ip_v4=ip_v4, ip_v6=ip_v6,
+            hostname=hostname, ip_v4=ip_v4, ip_v6=ip_v6,
             personality=personality, status=status, system_info=system_info)
 
         # Pair request
