@@ -48,6 +48,12 @@ class WorkerStatusClient(AutoMarshallingRestClient):
                             request_entity=req_obj)
         return resp
 
+    def direct_update(self, worker_id, worker_token, body):
+        """Allows direct access for negative testing ONLY!"""
+        url = self._get_remote_url(worker_id)
+        headers = {'WORKER-TOKEN': worker_token}
+        return self.request('PUT', url, headers=headers)
+
     def get_worker_status(self, worker_id):
         url = '{base}/{version}/worker/{worker_id}/status'.format(
             base=self.url, version=self.api_version, worker_id=worker_id)

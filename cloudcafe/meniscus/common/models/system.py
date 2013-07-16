@@ -102,9 +102,9 @@ class DiskUsage(AutoMarshallingListModel):
     def _dict_to_obj(cls, json_dict):
         usage = cls()
         for disk in json_dict:
-            part = Partition(name=disk,
-                             used=json_dict[disk]['used'],
-                             total=json_dict[disk]['total'])
+            part = Partition(name=disk.get('device'),
+                             used=disk.get('used'),
+                             total=disk.get('total'))
             usage.append(part)
         return usage
 

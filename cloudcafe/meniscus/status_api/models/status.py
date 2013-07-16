@@ -82,6 +82,10 @@ class WorkerLoadAverage(LoadAverage):
         json_dict = str_to_dict(serialized_str)
         return cls._dict_to_obj(json_dict.get(cls.ROOT_TAG))
 
+    def _obj_to_json(self):
+        usage = super(WorkerLoadAverage, self)._obj_to_dict()
+        return dict_to_str({'load_average': usage})
+
 
 class WorkerDiskUsage(DiskUsage):
     ROOT_TAG = 'disk_usage'
