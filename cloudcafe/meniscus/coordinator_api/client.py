@@ -31,7 +31,7 @@ class PairingClient(AutoMarshallingRestClient):
         self.api_version = api_version
         self.auth_token = auth_token
 
-    def pair(self, hostname, callback, ip_v4, ip_v6, personality, status,
+    def pair(self, hostname, ip_v4, ip_v6, personality, status,
              os_type, memory_mb, arch, cpu_cores, load_average, disks):
         """
         POST {base}/{version}/pairing
