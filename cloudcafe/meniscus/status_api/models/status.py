@@ -101,3 +101,20 @@ class WorkerDiskUsage(DiskUsage):
     def _obj_to_json(self):
         usage = super(WorkerDiskUsage, self)._obj_to_dict()
         return dict_to_str({'disk_usage': usage})
+
+
+class WorkerStatusUpdate(AutoMarshallingModel):
+    ROOT_TAG = 'worker_status'
+
+    def __init__(self, status=None, system_info=None):
+        super(WorkerStatusUpdate, self).__init__()
+
+        self.status = status
+        self.system_info = system_info
+
+    def _obj_to_json(self):
+        body = {
+            "status": self.status,
+            "system_info": self.system_info._obj_to_dict()
+        }
+        return dict_to_str({"worker_status": body})

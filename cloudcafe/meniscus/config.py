@@ -174,4 +174,4 @@ class CorrelationConfig(ConfigSectionInterface):
 
     @property
     def native(self):
-        return self.get('native')
+        return json_to_dict(self.get('native'))

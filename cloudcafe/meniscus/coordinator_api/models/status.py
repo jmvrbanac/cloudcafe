@@ -28,5 +28,5 @@ class UpdateStatus(AutoMarshallingModel):
 
     def _obj_to_dict(self):
         return {
-            'status': self.worker_status
+            'worker_status': self.worker_status
         }

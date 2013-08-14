@@ -35,14 +35,11 @@ class CreateTenant(AutoMarshallingModel):
 class Tenant(AutoMarshallingModel):
     ROOT_TAG = 'tenant'
 
-    def __init__(self, tenant_id=None, event_producers=None, hosts=None,
-                 profiles=None, token=None):
+    def __init__(self, tenant_id=None, event_producers=None, token=None):
         """An object that represents an tenant's response object."""
         super(Tenant, self).__init__()
         self.tenant_id = tenant_id
         self.event_producers = event_producers
-        self.hosts = hosts
-        self.profiles = profiles
         self.token = token
 
     @classmethod
@@ -61,15 +58,11 @@ class Tenant(AutoMarshallingModel):
     def _dict_to_obj(cls, dic):
         event_producers = cls._convert_dict_of_types(
             Producer, dic.get('event_producers'))
-        hosts = cls._convert_dict_of_types(Host, dic.get('hosts'))
-        profiles = cls._convert_dict_of_types(Profile, dic.get('profiles'))
         token = TenantToken._dict_to_obj(dic.get('token'))
 
         kwargs = {
             'tenant_id': str(dic.get('tenant_id')),
             'event_producers': event_producers,
-            'hosts': hosts,
-            'profiles': profiles,
             'token': token
         }
         return Tenant(**kwargs)
